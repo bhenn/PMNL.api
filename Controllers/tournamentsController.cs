@@ -24,7 +24,7 @@ namespace PMNL.api.Controllers
                 .ThenInclude(p => p.Player)
             .Include(x => x.TournamentPlayers)
                 .ThenInclude(p => p.Player)
-            .ToList()
+            .ToList().OrderByDescending(o => o.Id)
             .Select(x => new {
                 id = x.Id,
                 description = x.Description,
@@ -33,15 +33,15 @@ namespace PMNL.api.Controllers
                     t.Player.Name,
                     t.Points,
                     t.Wins
-                }).OrderBy(o => o.Points),
-                games = x.Games.Select( y => new {
+                }).OrderByDescending(o => o.Points),
+                games = x.Games.OrderByDescending(o => o.Id).Select( y => new {
                     y.Id,
                     y.Description,
                     y.Date,
                     y.Rebuys,
                     y.ValueTotal,
                     GamesResults = y.GamesResults.Select(p => new {p.Order, p.TournamentPlayer.Player.Name, p.Points}).OrderBy(o => o.Order)
-                }).OrderByDescending(o => o.Id)
+                })
             });
             return Ok(tournaments);
         } 

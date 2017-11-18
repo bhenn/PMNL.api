@@ -22,6 +22,8 @@ namespace PMNL.api.Models
 
         public ICollection<GameResults> GamesResults { get; set; }
 
+        public Boolean DoublePoints { get; set; }
+
     }
 
 }

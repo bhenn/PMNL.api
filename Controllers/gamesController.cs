@@ -58,6 +58,10 @@ namespace PMNL.api.Controllers
             {
                 item.Points = getPoints(nrJogadores, item.Order);
 
+                if (game.DoublePoints){
+                    item.Points = item.Points * 2;
+                }
+
                 playerAlter = db.TournamentsPlayers.SingleOrDefault(x => x.Id == item.TournamentPlayerId);
                 playerAlter.Points += item.Points;
 
